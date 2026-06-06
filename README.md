@@ -1,56 +1,48 @@
 <h1 align="center">Beautiful Chinese Resume</h1>
 
 <p align="center">
-  <strong>把原始经历变成一份干净、专业、可投递的一页中文 DOCX 简历</strong>
+  <strong>一键生成清爽、专业、HR 友好的一页中文 DOCX 简历</strong>
 </p>
 
 <p align="center">
   <img alt="Codex Skill" src="https://img.shields.io/badge/Codex-Skill-2F6F73?style=for-the-badge">
-  <img alt="One Page" src="https://img.shields.io/badge/A4-One_Page-31516A?style=for-the-badge">
+  <img alt="A4 One Page" src="https://img.shields.io/badge/A4-One_Page-31516A?style=for-the-badge">
   <img alt="Word Verified" src="https://img.shields.io/badge/Word-Verified-3C7A89?style=for-the-badge">
-  <img alt="DOCX Output" src="https://img.shields.io/badge/Output-DOCX-6B7C8F?style=for-the-badge">
+  <img alt="Fact Safe" src="https://img.shields.io/badge/Fact-Safe-6B7C8F?style=for-the-badge">
 </p>
 
 <p align="center">
-  <sub>目标公司适配 · 中文表达规范 · HR 10 秒扫读 · Word 渲染检查</sub>
+  <sub>中文表达规范 · 目标公司适配 · 岗位关键词自然嵌入 · Word 渲染检查</sub>
 </p>
 
 <p align="center">
-  <img src="./assets/readme-preview.svg" alt="Beautiful Chinese Resume preview" width="920">
+  <img src="./assets/readme-preview.svg" alt="Beautiful Chinese Resume preview" width="940">
 </p>
 
 ---
 
-## 它解决什么
+## 为什么需要它
 
-很多简历不是内容差，而是 **重点埋得太深、语言太像流水账、版面太像表格**。
+很多简历不是经历不够，而是 **重点不突出、表达太口语、版面太拥挤**。
 
-`beautiful-chinese-resume` 是一个 Codex skill，用来把原始经历、目标公司、目标岗位和 JD，整理成一份 **中文、一页、A4、视觉清爽、岗位匹配** 的 `.docx` 简历。
+`beautiful-chinese-resume` 把原始经历、目标公司、目标岗位和 JD，整理成一份 **中文、一页、A4、可投递** 的 `.docx` 简历。它不是夸张包装，也不是模板堆砌，而是把事实写清楚、把重点放对、把版面做干净。
 
-> 核心原则：只优化表达、结构和排版，不编造经历。
+<p align="center">
+  <img src="./assets/readme-before-after.svg" alt="Before and after resume wording" width="900">
+</p>
 
-## 核心能力
-
-| 能力 | 结果 |
-| --- | --- |
-| 一键整理 | 从原始经历直接产出可投递 `.docx` |
-| 语言规范 | 把口语、流水账改成简历表达 |
-| 目标适配 | 根据目标公司、岗位 JD 和关键词调整重点 |
-| 美观排版 | 留白、字号层级、浅色分割线、少量强调色 |
-| Word 检查 | 确认能打开、是一页、分区完整、没有明显错位 |
-
-## 默认简历风格
+## 核心亮点
 
 <table>
   <tr>
-    <td><strong>清爽</strong><br>不用密集网格和花哨模板，第一眼干净。</td>
-    <td><strong>聚焦</strong><br>姓名、求职方向、学校、强相关经历优先出现。</td>
-    <td><strong>克制</strong><br>少量强调色和细分割线，避免过度装饰。</td>
+    <td><strong>一页 A4</strong><br>自动压缩弱相关内容，避免把简历塞成密集表格。</td>
+    <td><strong>HR 扫读</strong><br>姓名、求职方向、教育背景和强相关经历优先呈现。</td>
+    <td><strong>目标适配</strong><br>根据目标公司、岗位 JD 和关键词重排内容重点。</td>
   </tr>
   <tr>
-    <td><strong>真实</strong><br>不虚构公司、数据、奖项、证书和经历。</td>
-    <td><strong>专业</strong><br>用动作、工具、产出组织每条经历。</td>
-    <td><strong>可投递</strong><br>生成 DOCX 后用 Word 做最终检查。</td>
+    <td><strong>语言规范</strong><br>把流水账改成“动作 + 工具 + 产出”的简历表达。</td>
+    <td><strong>视觉克制</strong><br>留白、层级、浅色分割线和少量强调色。</td>
+    <td><strong>Word 检查</strong><br>生成后检查能否打开、是否一页、分区是否完整。</td>
   </tr>
 </table>
 
@@ -63,27 +55,13 @@
 | 数据/运营助理 | 表格维护、数据清洗、指标跟踪、周报、SOP |
 | 校招/实习投递 | HR 10 秒扫读、经历取舍、一页紧凑排版 |
 
-## 工作流
-
-```mermaid
-flowchart LR
-  A["原始经历"] --> B["事实边界"]
-  B --> C["目标公司 / JD 匹配"]
-  C --> D["语言规范化"]
-  D --> E["一页 A4 排版"]
-  E --> F["Word 渲染检查"]
-  F --> G["可投递 DOCX"]
-```
-
-## 安装
+## 快速开始
 
 ```powershell
 git clone https://github.com/hao0401/beautiful-chinese-resume.git "$env:USERPROFILE\.codex\skills\beautiful-chinese-resume"
 ```
 
-重启 Codex 后即可使用。
-
-## 使用方式
+重启 Codex 后，直接这样说：
 
 ```text
 使用 beautiful-chinese-resume，帮我生成一页中文 DOCX 简历。
@@ -94,24 +72,37 @@ git clone https://github.com/hao0401/beautiful-chinese-resume.git "$env:USERPROF
 原始经历：……
 ```
 
-也可以直接调用：
+也可以显式调用：
 
 ```text
 Use $beautiful-chinese-resume to create a one-page Chinese DOCX resume from my raw experience, target company, and target role.
 ```
 
+## 它如何工作
+
+```mermaid
+flowchart LR
+  A["原始经历"] --> B["事实边界"]
+  B --> C["目标公司 / JD 匹配"]
+  C --> D["中文表达规范化"]
+  D --> E["一页 A4 排版"]
+  E --> F["Word 渲染检查"]
+  F --> G["可投递 DOCX"]
+```
+
 ## 生成标准
 
-生成的简历默认满足：
+| 标准 | 要求 |
+| --- | --- |
+| 页面 | 一页 A4，清爽留白，不做密集表格 |
+| 顶部 | 姓名、求职方向、联系方式清晰 |
+| 分区 | 教育背景 / 项目经历 / 实习经历 / 技能证书 |
+| 语言 | 不写空话，不编造结果，不堆砌关键词 |
+| 排版 | 字号层级、浅色分割线、少量强调色 |
+| 验证 | Word 打开检查、页数检查、分区检查 |
 
-- 一页 A4，不把内容塞成密集表格。
-- 顶部姓名、求职方向、联系方式清楚。
-- 分区标题有层级，使用浅色分割线。
-- 正文保持可读字号，不靠极小字体硬压缩。
-- 关键词自然出现，不机械堆砌。
-- 内容太多时优先压缩弱相关经历，而不是牺牲版面。
-
-## 项目结构
+<details>
+<summary><strong>项目结构</strong></summary>
 
 ```text
 beautiful-chinese-resume/
@@ -119,6 +110,7 @@ beautiful-chinese-resume/
 ├─ agents/
 │  └─ openai.yaml
 ├─ assets/
+│  ├─ readme-before-after.svg
 │  └─ readme-preview.svg
 ├─ references/
 │  ├─ content-rules.md
@@ -129,7 +121,10 @@ beautiful-chinese-resume/
    └─ verify_resume_docx.py
 ```
 
-## 脚本
+</details>
+
+<details>
+<summary><strong>脚本用法</strong></summary>
 
 从结构化 JSON 生成中文 DOCX：
 
@@ -150,6 +145,8 @@ python .\scripts\verify_resume_docx.py .\姓名-目标公司-岗位-中文简历
 | 分区 | 检查教育、项目、实习、技能等核心分区 |
 | 关键词 | 检查目标岗位关键词是否自然出现 |
 | PDF | 可按需导出投递版 PDF |
+
+</details>
 
 ## License
 
