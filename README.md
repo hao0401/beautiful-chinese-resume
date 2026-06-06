@@ -137,19 +137,6 @@ python .\scripts\verify_resume_docx.py .\姓名-目标公司-岗位-中文简历
 | 关键词 | 检查目标岗位关键词是否自然出现 |
 | PDF | 可按需导出投递版 PDF |
 
-## 隐私边界
-
-这个仓库只包含 skill 规则、参考文档和生成/检查脚本。
-
-不要提交：
-
-- 真实个人简历。
-- 真实手机号、邮箱、地址、身份证号。
-- 生成出的 `.docx` 或 `.pdf` 投递文件。
-- 包含目标公司内部信息的 JD 或面试材料。
-
-`.gitignore` 已默认排除常见简历产物，例如 `.docx`、`.pdf`、`resume*.json`。
-
 ## License
 
-No license has been selected yet. Add one before public reuse or redistribution if needed.
+暂未选择开源许可证。如需公开复用或再分发，请先补充 License。
