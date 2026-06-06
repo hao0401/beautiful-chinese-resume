@@ -1,67 +1,85 @@
 <h1 align="center">Beautiful Chinese Resume</h1>
 
 <p align="center">
-  <strong>一键生成清爽、专业、HR 友好的一页中文 DOCX 简历</strong>
+  给 Codex 用的中文简历 skill：把原始经历整理成一页、清爽、可投递的 DOCX。
 </p>
 
 <p align="center">
   <img alt="Codex Skill" src="https://img.shields.io/badge/Codex-Skill-2F6F73?style=for-the-badge">
-  <img alt="A4 One Page" src="https://img.shields.io/badge/A4-One_Page-31516A?style=for-the-badge">
-  <img alt="Word Verified" src="https://img.shields.io/badge/Word-Verified-3C7A89?style=for-the-badge">
-  <img alt="Fact Safe" src="https://img.shields.io/badge/Fact-Safe-6B7C8F?style=for-the-badge">
+  <img alt="DOCX" src="https://img.shields.io/badge/Output-DOCX-31516A?style=for-the-badge">
+  <img alt="Word Check" src="https://img.shields.io/badge/Word-Check-3C7A89?style=for-the-badge">
 </p>
 
 <p align="center">
-  <sub>中文表达规范 · 目标公司适配 · 岗位关键词自然嵌入 · Word 渲染检查</sub>
-</p>
-
-<p align="center">
-  <img src="./assets/readme-preview.svg" alt="Beautiful Chinese Resume preview" width="940">
+  <img src="./assets/readme-preview.svg" alt="Beautiful Chinese Resume preview" width="920">
 </p>
 
 ---
 
-## 为什么需要它
+## 为什么做这个
 
-很多简历不是经历不够，而是 **重点不突出、表达太口语、版面太拥挤**。
+很多中文简历的问题不在经历本身，而在呈现方式。
 
-`beautiful-chinese-resume` 把原始经历、目标公司、目标岗位和 JD，整理成一份 **中文、一页、A4、可投递** 的 `.docx` 简历。它不是夸张包装，也不是模板堆砌，而是把事实写清楚、把重点放对、把版面做干净。
+有些写得像流水账，有些把所有内容塞进表格里，还有些为了显得“高级”用了太多空话。HR 看简历的时间很短，重点如果埋在下面，再好的经历也容易被扫过去。
+
+这个 skill 只想解决一件具体的事：把用户给出的原始经历，整理成一份 **一页 A4、中文表达自然、版面干净** 的 Word 简历。
+
+它不负责编故事，也不负责把普通经历包装成夸张成果。事实是什么，就在事实范围内写得更清楚。
 
 <p align="center">
   <img src="./assets/readme-before-after.svg" alt="Before and after resume wording" width="900">
 </p>
 
-## 核心亮点
+## 它会做什么
 
-<table>
-  <tr>
-    <td><strong>一页 A4</strong><br>自动压缩弱相关内容，避免把简历塞成密集表格。</td>
-    <td><strong>HR 扫读</strong><br>姓名、求职方向、教育背景和强相关经历优先呈现。</td>
-    <td><strong>目标适配</strong><br>根据目标公司、岗位 JD 和关键词重排内容重点。</td>
-  </tr>
-  <tr>
-    <td><strong>语言规范</strong><br>把流水账改成“动作 + 工具 + 产出”的简历表达。</td>
-    <td><strong>视觉克制</strong><br>留白、层级、浅色分割线和少量强调色。</td>
-    <td><strong>Word 检查</strong><br>生成后检查能否打开、是否一页、分区是否完整。</td>
-  </tr>
-</table>
+- 先看原始经历、目标岗位、目标公司和 JD。
+- 把经历拆成事实：学校、项目、实习、技能、时间、工具、产出。
+- 根据岗位挑重点，而不是把所有内容平均铺开。
+- 把口语化表达改成简历里能用的句子。
+- 生成一页中文 DOCX，不做密密麻麻的表格。
+- 用 Word 打开检查，确认页数、分区和基本渲染没问题。
 
-## 适合的岗位
+原则很简单：
 
-| 方向 | 会自然强化的关键词 |
+> 只优化表达、结构和排版，不编造经历。
+
+## 比较适合的简历
+
+这个 skill 更偏实习和校招简历，尤其适合这些方向：
+
+| 方向 | 常见关键词 |
 | --- | --- |
 | 跨境电商运营实习 | Amazon、Listing、ASIN、BSR、竞品调研、Excel |
 | 内容运营实习 | 文案、选题、内容排期、账号维护、数据复盘 |
 | 数据/运营助理 | 表格维护、数据清洗、指标跟踪、周报、SOP |
-| 校招/实习投递 | HR 10 秒扫读、经历取舍、一页紧凑排版 |
+| 校招/实习投递 | 教育背景、项目经历、实习经历、技能证书 |
 
-## 快速开始
+它不会硬塞关键词。只有当用户的经历能支撑这些词时，才会自然放进去。
+
+## 生成出来应该是什么感觉
+
+不是花哨模板，也不是满屏表格。默认会往这个方向做：
+
+- 顶部能看清姓名、求职方向和联系方式。
+- 分区清楚：教育背景、项目经历、实习经历、技能证书。
+- 字号不要太小，内容不要挤。
+- 用一点浅色分割线和强调色，但不抢内容。
+- 重要经历放前面，弱相关内容能压就压。
+- 如果内容超出一页，优先删弱项，不靠极小字号硬塞。
+
+## 安装
+
+把仓库放到 Codex 的 skills 目录：
 
 ```powershell
 git clone https://github.com/hao0401/beautiful-chinese-resume.git "$env:USERPROFILE\.codex\skills\beautiful-chinese-resume"
 ```
 
-重启 Codex 后，直接这样说：
+然后重启 Codex。
+
+## 怎么用
+
+在 Codex 里直接说：
 
 ```text
 使用 beautiful-chinese-resume，帮我生成一页中文 DOCX 简历。
@@ -72,34 +90,22 @@ git clone https://github.com/hao0401/beautiful-chinese-resume.git "$env:USERPROF
 原始经历：……
 ```
 
-也可以显式调用：
+英文触发也可以：
 
 ```text
 Use $beautiful-chinese-resume to create a one-page Chinese DOCX resume from my raw experience, target company, and target role.
 ```
 
-## 它如何工作
+## 大致流程
 
 ```mermaid
 flowchart LR
-  A["原始经历"] --> B["事实边界"]
-  B --> C["目标公司 / JD 匹配"]
-  C --> D["中文表达规范化"]
-  D --> E["一页 A4 排版"]
-  E --> F["Word 渲染检查"]
-  F --> G["可投递 DOCX"]
+  A["原始经历"] --> B["确认事实"]
+  B --> C["匹配岗位"]
+  C --> D["改写表达"]
+  D --> E["生成 DOCX"]
+  E --> F["Word 检查"]
 ```
-
-## 生成标准
-
-| 标准 | 要求 |
-| --- | --- |
-| 页面 | 一页 A4，清爽留白，不做密集表格 |
-| 顶部 | 姓名、求职方向、联系方式清晰 |
-| 分区 | 教育背景 / 项目经历 / 实习经历 / 技能证书 |
-| 语言 | 不写空话，不编造结果，不堆砌关键词 |
-| 排版 | 字号层级、浅色分割线、少量强调色 |
-| 验证 | Word 打开检查、页数检查、分区检查 |
 
 <details>
 <summary><strong>项目结构</strong></summary>
@@ -132,19 +138,13 @@ beautiful-chinese-resume/
 python .\scripts\build_resume_docx.py .\resume.json .\姓名-目标公司-岗位-中文简历.docx --style campus
 ```
 
-检查 DOCX 是否满足投递要求：
+检查 DOCX：
 
 ```powershell
 python .\scripts\verify_resume_docx.py .\姓名-目标公司-岗位-中文简历.docx --require-word --expect-one-page
 ```
 
-| 检查项 | 说明 |
-| --- | --- |
-| Word 打开 | 确认 `.docx` 不是只在代码层面有效 |
-| 页数 | 默认要求一页 |
-| 分区 | 检查教育、项目、实习、技能等核心分区 |
-| 关键词 | 检查目标岗位关键词是否自然出现 |
-| PDF | 可按需导出投递版 PDF |
+检查内容包括 Word 是否能打开、页数是否为一页、核心分区是否存在，以及目标岗位关键词是否自然出现。
 
 </details>
 
