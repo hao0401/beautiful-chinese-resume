@@ -1,0 +1,4 @@
+interface:
+  display_name: "Beautiful Chinese Resume"
+  short_description: "Polished one-page Chinese DOCX resumes"
+  default_prompt: "Use $beautiful-chinese-resume to create a one-page Chinese DOCX resume from my raw experience, target company, and target role."
