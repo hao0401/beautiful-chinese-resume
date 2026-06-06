@@ -1,0 +1,62 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="60" x2="1080" y2="660" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4FBFA"/>
+      <stop offset="1" stop-color="#F6F7FB"/>
+    </linearGradient>
+    <filter id="shadow" x="258" y="58" width="684" height="624" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="18"/>
+      <feGaussianBlur stdDeviation="24"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.06 0 0 0 0 0.12 0 0 0 0 0.16 0 0 0 0.16 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="720" rx="36" fill="url(#bg)"/>
+
+  <g opacity="0.9">
+    <rect x="92" y="112" width="210" height="44" rx="22" fill="#E1F1EF"/>
+    <text x="122" y="141" fill="#2F6F73" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">One-page DOCX</text>
+    <rect x="900" y="120" width="210" height="44" rx="22" fill="#E8EEF3"/>
+    <text x="930" y="149" fill="#31516A" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Word verified</text>
+    <rect x="72" y="548" width="248" height="44" rx="22" fill="#F2EDE5"/>
+    <text x="102" y="577" fill="#7A5D35" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Target-role matched</text>
+    <rect x="880" y="532" width="238" height="44" rx="22" fill="#E9F3EF"/>
+    <text x="910" y="561" fill="#476B55" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Fact-safe writing</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="300" y="70" width="600" height="570" rx="18" fill="white"/>
+    <rect x="300" y="70" width="600" height="570" rx="18" stroke="#E5ECEB"/>
+
+    <text x="360" y="132" fill="#202124" font-family="Microsoft YaHei, Arial, sans-serif" font-size="36" font-weight="700">姓名</text>
+    <text x="360" y="166" fill="#2F6F73" font-family="Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700">求职意向：跨境电商运营实习生</text>
+    <text x="360" y="195" fill="#6B7280" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14">电话 | 邮箱 | 城市</text>
+
+    <line x1="360" y1="232" x2="840" y2="232" stroke="#D9E8E6" stroke-width="2"/>
+    <text x="360" y="224" fill="#2F6F73" font-family="Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700">教育背景</text>
+    <text x="360" y="266" fill="#202124" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700">某大学 | 电子商务 | 本科</text>
+    <text x="738" y="266" fill="#77838F" font-family="Arial, sans-serif" font-size="13">2022.09 - 2026.06</text>
+    <rect x="360" y="284" width="420" height="9" rx="4.5" fill="#EEF3F2"/>
+
+    <line x1="360" y1="334" x2="840" y2="334" stroke="#D9E8E6" stroke-width="2"/>
+    <text x="360" y="326" fill="#2F6F73" font-family="Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700">项目经历</text>
+    <text x="360" y="368" fill="#202124" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700">Amazon 竞品调研项目</text>
+    <text x="360" y="398" fill="#3C4043" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14">• 整理 Listing、ASIN、BSR、价格和评价信息，建立 Excel 对比表</text>
+    <text x="360" y="426" fill="#3C4043" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14">• 梳理关键词布局和商品卖点，输出内容优化建议</text>
+
+    <line x1="360" y1="476" x2="840" y2="476" stroke="#D9E8E6" stroke-width="2"/>
+    <text x="360" y="468" fill="#2F6F73" font-family="Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700">实习经历</text>
+    <text x="360" y="510" fill="#202124" font-family="Microsoft YaHei, Arial, sans-serif" font-size="15" font-weight="700">内容运营实习生</text>
+    <rect x="360" y="528" width="460" height="9" rx="4.5" fill="#EEF3F2"/>
+    <rect x="360" y="550" width="390" height="9" rx="4.5" fill="#EEF3F2"/>
+
+    <line x1="360" y1="600" x2="840" y2="600" stroke="#D9E8E6" stroke-width="2"/>
+    <text x="360" y="592" fill="#2F6F73" font-family="Microsoft YaHei, Arial, sans-serif" font-size="17" font-weight="700">技能证书</text>
+    <text x="360" y="626" fill="#3C4043" font-family="Microsoft YaHei, Arial, sans-serif" font-size="14">Excel · 数据透视表 · 竞品调研 · 内容运营 · 英语</text>
+  </g>
+</svg>
