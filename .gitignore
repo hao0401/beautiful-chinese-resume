@@ -1,4 +1,8 @@
 __pycache__/
 *.py[cod]
 ~$*.docx
+*.docx
+*.pdf
+resume*.json
+*resume*.json
 *.tmp
