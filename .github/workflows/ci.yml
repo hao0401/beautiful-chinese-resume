@@ -29,8 +29,11 @@ jobs:
       - name: Validate skill metadata
         run: python scripts/validate_skill.py .
 
+      - name: Lint sample resume JSON
+        run: python scripts/lint_resume_json.py examples/sample_resume.json --strict
+
       - name: Compile scripts
-        run: python -m py_compile scripts/build_resume_docx.py scripts/verify_resume_docx.py scripts/validate_skill.py
+        run: python -m py_compile scripts/build_resume_docx.py scripts/verify_resume_docx.py scripts/validate_skill.py scripts/lint_resume_json.py
 
       - name: Run tests
         run: python -m pytest

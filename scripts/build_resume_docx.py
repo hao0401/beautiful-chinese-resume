@@ -50,6 +50,16 @@ STYLE_PRESETS = {
 }
 
 SECTION_ORDER = ["教育背景", "项目经历", "实习经历", "技能证书", "校园经历", "获奖经历", "自我评价"]
+SECTION_SOURCE_KEYS = [
+    "education",
+    "projects",
+    "internships",
+    "experience",
+    "skills",
+    "certificates",
+    "campus",
+    "awards",
+]
 
 
 def load_json(path: str) -> dict[str, Any]:
@@ -57,6 +67,53 @@ def load_json(path: str) -> dict[str, Any]:
         return json.loads(sys.stdin.read().lstrip("\ufeff"))
     with open(path, "r", encoding="utf-8-sig") as fh:
         return json.load(fh)
+
+
+def validate_resume_data(data: Any) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(data, dict):
+        return ["resume JSON root must be an object"]
+
+    contact = data.get("contact")
+    if contact is not None and not isinstance(contact, str | list):
+        errors.append("contact must be a string or list")
+
+    summary = data.get("summary")
+    if summary is not None and not isinstance(summary, str | list):
+        errors.append("summary must be a string or list")
+
+    has_section_source = isinstance(data.get("sections"), list) or any(data.get(key) for key in SECTION_SOURCE_KEYS)
+    if not has_section_source:
+        errors.append("at least one section source is required: sections, education, projects, internships, or skills")
+
+    sections = data.get("sections")
+    if sections is not None:
+        if not isinstance(sections, list):
+            errors.append("sections must be a list")
+        else:
+            for section_index, section in enumerate(sections):
+                path = f"sections[{section_index}]"
+                if not isinstance(section, dict):
+                    errors.append(f"{path} must be an object")
+                    continue
+                if not str(section.get("title") or "").strip():
+                    errors.append(f"{path}.title is required")
+                items = section.get("items", [])
+                if not isinstance(items, list):
+                    errors.append(f"{path}.items must be a list")
+                    continue
+                for item_index, item in enumerate(items):
+                    item_path = f"{path}.items[{item_index}]"
+                    if isinstance(item, str):
+                        continue
+                    if not isinstance(item, dict):
+                        errors.append(f"{item_path} must be a string or object")
+                        continue
+                    details = item.get("details", item.get("bullets", []))
+                    if details is not None and not isinstance(details, str | list):
+                        errors.append(f"{item_path}.details must be a string or list")
+
+    return errors
 
 
 def set_run_font(
@@ -255,6 +312,11 @@ def add_item(doc: Document, item: Any, style: ResumeStyle) -> None:
 
 
 def build_docx(data: dict[str, Any], output: Path, style_name: str) -> None:
+    errors = validate_resume_data(data)
+    if errors:
+        joined = "\n- ".join(errors)
+        raise ValueError(f"invalid resume data:\n- {joined}")
+
     style = STYLE_PRESETS.get(style_name)
     if style is None:
         valid = ", ".join(sorted(STYLE_PRESETS))

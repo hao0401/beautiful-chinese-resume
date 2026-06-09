@@ -148,6 +148,7 @@ beautiful-chinese-resume/
 │  └─ test_skill_metadata.py
 └─ scripts/
    ├─ build_resume_docx.py
+   ├─ lint_resume_json.py
    ├─ validate_skill.py
    └─ verify_resume_docx.py
 ```
@@ -161,6 +162,12 @@ beautiful-chinese-resume/
 
 ```powershell
 python .\scripts\build_resume_docx.py .\examples\sample_resume.json .\sample.docx --style campus
+```
+
+先检查 JSON 内容是否明显缺项：
+
+```powershell
+python .\scripts\lint_resume_json.py .\examples\sample_resume.json
 ```
 
 查看已有样式：

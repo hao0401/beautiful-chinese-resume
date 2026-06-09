@@ -61,6 +61,7 @@ Required visual standard:
 Prefer the bundled builder when the resume can be represented as structured JSON:
 
 ```powershell
+python .\scripts\lint_resume_json.py .\resume.json
 python .\scripts\build_resume_docx.py .\resume.json .\姓名-目标公司-岗位-中文简历.docx --style campus
 ```
 

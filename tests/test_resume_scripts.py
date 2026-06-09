@@ -5,8 +5,9 @@ from pathlib import Path
 
 from docx import Document
 
-from scripts.build_resume_docx import STYLE_PRESETS, build_docx, load_json
 from scripts import verify_resume_docx
+from scripts.build_resume_docx import STYLE_PRESETS, build_docx, load_json
+from scripts.lint_resume_json import lint_resume_json
 from scripts.verify_resume_docx import extract_docx_text
 
 
@@ -48,6 +49,32 @@ def test_load_json_accepts_utf8_bom(tmp_path: Path) -> None:
     data = load_json(str(path))
 
     assert data["name"] == "示例姓名"
+
+
+def test_build_docx_rejects_invalid_resume_data(tmp_path: Path) -> None:
+    output = tmp_path / "bad.docx"
+
+    try:
+        build_docx({"name": "只有姓名"}, output, "campus")
+    except ValueError as exc:
+        assert "at least one section source is required" in str(exc)
+    else:  # pragma: no cover
+        raise AssertionError("expected invalid resume data to fail")
+
+
+def test_lint_resume_json_warns_about_missing_fields() -> None:
+    result = lint_resume_json({"name": "示例", "sections": [{"title": "教育背景", "items": []}]})
+
+    assert result["ok"] is True
+    assert "target_role is missing" in result["warnings"]
+    assert any("missing recommended sections" in warning for warning in result["warnings"])
+
+
+def test_lint_resume_json_errors_on_bad_shape() -> None:
+    result = lint_resume_json({"sections": "bad"})
+
+    assert result["ok"] is False
+    assert "sections must be a list" in result["errors"]
 
 
 def test_verify_docx_reports_unconfirmed_page_count_without_word(tmp_path: Path, monkeypatch) -> None:
