@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -21,11 +22,31 @@ except ImportError as exc:  # pragma: no cover
     ) from exc
 
 
-ACCENTS = {
-    "campus": "2F6F73",
-    "business": "31516A",
-    "fresh": "3C7A89",
-    "minimal": "404040",
+@dataclass(frozen=True)
+class ResumeStyle:
+    accent: str
+    border: str
+    body: str = "202124"
+    muted: str = "6B7280"
+    secondary: str = "4B5563"
+    font: str = "Microsoft YaHei"
+    name_size: float = 21
+    role_size: float = 10.5
+    contact_size: float = 9.2
+    section_size: float = 11
+    heading_size: float = 10
+    body_size: float = 9.35
+    margin_top_cm: float = 1.35
+    margin_bottom_cm: float = 1.25
+    margin_left_cm: float = 1.35
+    margin_right_cm: float = 1.35
+
+
+STYLE_PRESETS = {
+    "campus": ResumeStyle(accent="2F6F73", border="D8E4E6"),
+    "business": ResumeStyle(accent="31516A", border="DDE5EA", margin_left_cm=1.45, margin_right_cm=1.45),
+    "fresh": ResumeStyle(accent="3C7A89", border="D7E8EC", role_size=10.3),
+    "minimal": ResumeStyle(accent="404040", border="E2E2E2", section_size=10.8),
 }
 
 SECTION_ORDER = ["教育背景", "项目经历", "实习经历", "技能证书", "校园经历", "获奖经历", "自我评价"]
@@ -38,11 +59,18 @@ def load_json(path: str) -> dict[str, Any]:
         return json.load(fh)
 
 
-def set_run_font(run, *, size: float | None = None, bold: bool = False, color: str | None = None) -> None:
-    run.font.name = "Microsoft YaHei"
-    run._element.rPr.rFonts.set(qn("w:eastAsia"), "Microsoft YaHei")
-    run._element.rPr.rFonts.set(qn("w:ascii"), "Microsoft YaHei")
-    run._element.rPr.rFonts.set(qn("w:hAnsi"), "Microsoft YaHei")
+def set_run_font(
+    run,
+    *,
+    font: str = "Microsoft YaHei",
+    size: float | None = None,
+    bold: bool = False,
+    color: str | None = None,
+) -> None:
+    run.font.name = font
+    run._element.rPr.rFonts.set(qn("w:eastAsia"), font)
+    run._element.rPr.rFonts.set(qn("w:ascii"), font)
+    run._element.rPr.rFonts.set(qn("w:hAnsi"), font)
     if size:
         run.font.size = Pt(size)
     run.bold = bold
@@ -71,9 +99,17 @@ def add_bottom_border(paragraph, color: str = "D8E4E6") -> None:
     p_bdr.append(bottom)
 
 
-def add_text(paragraph, text: str, *, size: float = 10, bold: bool = False, color: str | None = None):
+def add_text(
+    paragraph,
+    text: str,
+    *,
+    style: ResumeStyle,
+    size: float = 10,
+    bold: bool = False,
+    color: str | None = None,
+):
     run = paragraph.add_run(text)
-    set_run_font(run, size=size, bold=bold, color=color)
+    set_run_font(run, font=style.font, size=size, bold=bold, color=color)
     return run
 
 
@@ -115,13 +151,14 @@ def normalize_sections(data: dict[str, Any]) -> list[dict[str, Any]]:
 
 def sort_sections(sections: list[dict[str, Any]]) -> list[dict[str, Any]]:
     order = {title: idx for idx, title in enumerate(SECTION_ORDER)}
+
     def section_sort_key(section: dict[str, Any]) -> int:
         return order.get(section["title"], 99)
 
-    return sorted(sections, key = section_sort_key)
+    return sorted(sections, key=section_sort_key)
 
 
-def add_header(doc: Document, data: dict[str, Any], accent: str) -> None:
+def add_header(doc: Document, data: dict[str, Any], style: ResumeStyle) -> None:
     name = data.get("name") or "姓名"
     target_role = data.get("target_role") or data.get("role") or "求职方向待补充"
     target_company = data.get("target_company")
@@ -133,7 +170,7 @@ def add_header(doc: Document, data: dict[str, Any], accent: str) -> None:
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     set_paragraph_spacing(p, after=1)
-    add_text(p, name, size=21, bold=True, color="202124")
+    add_text(p, name, style=style, size=style.name_size, bold=True, color=style.body)
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -141,37 +178,49 @@ def add_header(doc: Document, data: dict[str, Any], accent: str) -> None:
     role_line = f"求职意向：{target_role}"
     if target_company and show_company:
         role_line += f" | 目标公司：{target_company}"
-    add_text(p, role_line, size=10.5, bold=True, color=accent)
+    add_text(p, role_line, style=style, size=style.role_size, bold=True, color=style.accent)
 
     if contact:
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         set_paragraph_spacing(p, after=5)
-        add_text(p, " | ".join(str(item) for item in contact if item), size=9.2, color="5F6368")
+        add_text(
+            p,
+            " | ".join(str(item) for item in contact if item),
+            style=style,
+            size=style.contact_size,
+            color="5F6368",
+        )
 
 
-def add_summary(doc: Document, summary: Any) -> None:
+def add_summary(doc: Document, summary: Any, style: ResumeStyle) -> None:
     if not summary:
         return
     if isinstance(summary, str):
         summary = [summary]
     p = doc.add_paragraph()
     set_paragraph_spacing(p, after=3)
-    add_text(p, "；".join(str(item).strip() for item in summary if str(item).strip()), size=9.8, color="3C4043")
+    add_text(
+        p,
+        "；".join(str(item).strip() for item in summary if str(item).strip()),
+        style=style,
+        size=9.8,
+        color="3C4043",
+    )
 
 
-def add_section_title(doc: Document, title: str, accent: str) -> None:
+def add_section_title(doc: Document, title: str, style: ResumeStyle) -> None:
     p = doc.add_paragraph()
     set_paragraph_spacing(p, before=3, after=2)
-    add_text(p, title, size=11, bold=True, color=accent)
-    add_bottom_border(p)
+    add_text(p, title, style=style, size=style.section_size, bold=True, color=style.accent)
+    add_bottom_border(p, style.border)
 
 
-def add_item(doc: Document, item: Any) -> None:
+def add_item(doc: Document, item: Any, style: ResumeStyle) -> None:
     if isinstance(item, str):
         p = doc.add_paragraph()
         set_paragraph_spacing(p, after=1)
-        add_text(p, "• " + item, size=9.7, color="202124")
+        add_text(p, "• " + item, style=style, size=9.7, color=style.body)
         return
 
     heading = item.get("heading") or item.get("title") or ""
@@ -185,14 +234,14 @@ def add_item(doc: Document, item: Any) -> None:
         p = doc.add_paragraph()
         set_paragraph_spacing(p, before=1, after=0.5)
         p.paragraph_format.tab_stops.add_tab_stop(Cm(18.0), WD_TAB_ALIGNMENT.RIGHT)
-        add_text(p, str(heading), size=10, bold=True, color="202124")
+        add_text(p, str(heading), style=style, size=style.heading_size, bold=True, color=style.body)
         if date:
-            add_text(p, "\t" + str(date), size=9.2, color="6B7280")
+            add_text(p, "\t" + str(date), style=style, size=9.2, color=style.muted)
 
     if subheading:
         p = doc.add_paragraph()
         set_paragraph_spacing(p, after=0.5)
-        add_text(p, str(subheading), size=9.5, color="4B5563")
+        add_text(p, str(subheading), style=style, size=9.5, color=style.secondary)
 
     for detail in details:
         text = str(detail).strip()
@@ -202,35 +251,39 @@ def add_item(doc: Document, item: Any) -> None:
         p.paragraph_format.left_indent = Cm(0.15)
         p.paragraph_format.first_line_indent = Cm(-0.15)
         set_paragraph_spacing(p, after=0.2)
-        add_text(p, "• " + text, size=9.35, color="202124")
+        add_text(p, "• " + text, style=style, size=style.body_size, color=style.body)
 
 
-def build_docx(data: dict[str, Any], output: Path, style: str) -> None:
-    accent = ACCENTS.get(style, ACCENTS["campus"])
+def build_docx(data: dict[str, Any], output: Path, style_name: str) -> None:
+    style = STYLE_PRESETS.get(style_name)
+    if style is None:
+        valid = ", ".join(sorted(STYLE_PRESETS))
+        raise ValueError(f"unknown style {style_name!r}; valid styles: {valid}")
+
     doc = Document()
     section = doc.sections[0]
     section.page_width = Cm(21)
     section.page_height = Cm(29.7)
-    section.top_margin = Cm(1.35)
-    section.bottom_margin = Cm(1.25)
-    section.left_margin = Cm(1.35)
-    section.right_margin = Cm(1.35)
+    section.top_margin = Cm(style.margin_top_cm)
+    section.bottom_margin = Cm(style.margin_bottom_cm)
+    section.left_margin = Cm(style.margin_left_cm)
+    section.right_margin = Cm(style.margin_right_cm)
 
     normal = doc.styles["Normal"]
-    normal.font.name = "Microsoft YaHei"
-    normal._element.rPr.rFonts.set(qn("w:eastAsia"), "Microsoft YaHei")
+    normal.font.name = style.font
+    normal._element.rPr.rFonts.set(qn("w:eastAsia"), style.font)
     normal.font.size = Pt(9.5)
 
-    add_header(doc, data, accent)
-    add_summary(doc, data.get("summary"))
+    add_header(doc, data, style)
+    add_summary(doc, data.get("summary"), style)
 
     for section_data in sort_sections(normalize_sections(data)):
         items = section_data.get("items") or []
         if not items:
             continue
-        add_section_title(doc, section_data["title"], accent)
+        add_section_title(doc, section_data["title"], style)
         for item in items:
-            add_item(doc, item)
+            add_item(doc, item, style)
 
     output.parent.mkdir(parents=True, exist_ok=True)
     doc.save(output)
@@ -238,10 +291,18 @@ def build_docx(data: dict[str, Any], output: Path, style: str) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("input_json", help="Resume JSON path, or '-' for stdin.")
-    parser.add_argument("output_docx", help="Output .docx path.")
-    parser.add_argument("--style", choices=sorted(ACCENTS), default="campus")
+    parser.add_argument("input_json", nargs="?", help="Resume JSON path, or '-' for stdin.")
+    parser.add_argument("output_docx", nargs="?", help="Output .docx path.")
+    parser.add_argument("--style", choices=sorted(STYLE_PRESETS), default="campus")
+    parser.add_argument("--list-styles", action="store_true", help="List available style presets and exit.")
     args = parser.parse_args()
+
+    if args.list_styles:
+        print("\n".join(sorted(STYLE_PRESETS)))
+        return 0
+
+    if not args.input_json or not args.output_docx:
+        parser.error("input_json and output_docx are required unless --list-styles is used")
 
     data = load_json(args.input_json)
     output = Path(args.output_docx)

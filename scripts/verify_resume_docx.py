@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import platform
 import re
 import sys
 import zipfile
@@ -25,6 +26,9 @@ def extract_docx_text(path: Path) -> str:
 
 
 def word_check(path: Path, export_pdf: Path | None = None) -> dict:
+    if platform.system() != "Windows":
+        raise RuntimeError("Word COM render check is only available on Windows with Microsoft Word installed.")
+
     import win32com.client  # type: ignore
 
     word = win32com.client.DispatchEx("Word.Application")
@@ -60,6 +64,8 @@ def main() -> int:
         "file": str(path),
         "exists": path.exists(),
         "word_rendered": False,
+        "word_check_available": platform.system() == "Windows",
+        "page_check": "not_checked",
         "pages": None,
         "structural_text_length": 0,
         "missing_sections": [],
@@ -90,6 +96,7 @@ def main() -> int:
     export_pdf = Path(args.export_pdf) if args.export_pdf else None
     try:
         result.update(word_check(path, export_pdf))
+        result["page_check"] = "word_rendered"
     except Exception as exc:
         result["word_error"] = str(exc)
         if args.require_word:
@@ -99,6 +106,8 @@ def main() -> int:
         failures.append(f"expected_one_page_but_got_{result.get('pages')}")
     elif args.expect_one_page and result.get("pages") is None and args.require_word:
         failures.append("cannot_confirm_one_page_without_word")
+    elif args.expect_one_page and result.get("pages") is None:
+        result["page_check"] = "not_confirmed_without_word"
 
     if export_pdf:
         result["pdf_exported"] = export_pdf.exists()

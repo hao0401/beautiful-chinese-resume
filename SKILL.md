@@ -18,7 +18,7 @@ Use one-click mode unless the user explicitly asks for planning only:
 3. Ask only for missing name/contact/target role when they are required for a final resume. Otherwise proceed and mark non-critical gaps as `待补充`.
 4. Tailor content to the target company/JD by selecting, ordering, and wording facts. Do not invent facts.
 5. Generate a one-page A4 Chinese `.docx`.
-6. Open/render-check in Word. If Word is unavailable, say the resume was structurally checked but not Word-render verified.
+6. Open/render-check in Word. If Word is unavailable or the platform is not Windows, say the resume was structurally checked but the true Word-rendered page count was not confirmed.
 7. Iterate until the document is one page, aligned, readable, and not dense.
 
 ## Content Rules
@@ -64,6 +64,8 @@ Prefer the bundled builder when the resume can be represented as structured JSON
 python .\scripts\build_resume_docx.py .\resume.json .\姓名-目标公司-岗位-中文简历.docx --style campus
 ```
 
+Available bundled styles are `campus`, `business`, `fresh`, and `minimal`. Use `campus` by default for internship resumes. Use the builder's `STYLE_PRESETS` instead of hard-coding new layout constants when adding templates.
+
 The builder accepts this shape:
 
 ```json
@@ -100,14 +102,14 @@ python .\scripts\verify_resume_docx.py .\姓名-目标公司-岗位-中文简历
 
 Verification must check:
 
-- Word can open the document.
-- The rendered page count is one.
+- Word can open the document when Windows + Microsoft Word are available.
+- The rendered page count is one when Word rendering is available.
 - Sections exist and are not empty.
 - Top identity/contact information appears.
 - No visible overflow into a second page.
 - Optional PDF export renders if requested.
 
-If verification fails, revise the content or layout and rerun verification before final delivery.
+If verification fails, revise the content or layout and rerun verification before final delivery. If Word rendering is unavailable, clearly report that only structural validation was completed.
 
 ## Final Response
 

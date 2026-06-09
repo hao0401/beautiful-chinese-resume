@@ -1,8 +1,12 @@
 __pycache__/
 *.py[cod]
+*.egg-info/
+.pytest_cache/
 ~$*.docx
 *.docx
 *.pdf
 resume*.json
 *resume*.json
+!examples/
+!examples/*.json
 *.tmp

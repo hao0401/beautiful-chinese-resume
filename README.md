@@ -8,6 +8,7 @@
   <img alt="Codex Skill" src="https://img.shields.io/badge/Codex-Skill-2F6F73?style=for-the-badge">
   <img alt="DOCX" src="https://img.shields.io/badge/Output-DOCX-31516A?style=for-the-badge">
   <img alt="Word Check" src="https://img.shields.io/badge/Word-Check-3C7A89?style=for-the-badge">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-6B7C8F?style=for-the-badge">
 </p>
 
 <p align="center">
@@ -38,6 +39,7 @@
 - 把口语化表达改成简历里能用的句子。
 - 生成一页中文 DOCX，不做密密麻麻的表格。
 - 用 Word 打开检查，确认页数、分区和基本渲染没问题。
+- 在没有 Word 的环境里，会明确说明只能做结构检查，不能确认真实页数。
 
 原则很简单：
 
@@ -55,6 +57,16 @@
 | 校招/实习投递 | 教育背景、项目经历、实习经历、技能证书 |
 
 它不会硬塞关键词。只有当用户的经历能支撑这些词时，才会自然放进去。
+
+## 现在的边界
+
+这个项目更像一个可用的 Codex 简历 skill，不是完整的商业简历平台。
+
+- 更适合中文实习、校招和运营/电商方向。
+- 英文简历、技术岗、高管岗、设计作品集还没专门优化。
+- 内容强弱判断主要还是由 Codex 根据 `SKILL.md` 和参考规则完成。
+- `scripts/build_resume_docx.py` 负责稳定排版，不负责自动发明内容。
+- Word 页数检查依赖 Windows + Microsoft Word；Mac/Linux 上只能做结构检查。
 
 ## 生成出来应该是什么感觉
 
@@ -76,6 +88,12 @@ git clone https://github.com/hao0401/beautiful-chinese-resume.git "$env:USERPROF
 ```
 
 然后重启 Codex。
+
+如果只想试脚本，可以先装依赖：
+
+```powershell
+python -m pip install -e ".[test]"
+```
 
 ## 怎么用
 
@@ -118,12 +136,18 @@ beautiful-chinese-resume/
 ├─ assets/
 │  ├─ readme-before-after.svg
 │  └─ readme-preview.svg
+├─ examples/
+│  └─ sample_resume.json
 ├─ references/
 │  ├─ content-rules.md
 │  ├─ layout-rules.md
 │  └─ targeting-keywords.md
+├─ tests/
+│  ├─ test_resume_scripts.py
+│  └─ test_skill_metadata.py
 └─ scripts/
    ├─ build_resume_docx.py
+   ├─ validate_skill.py
    └─ verify_resume_docx.py
 ```
 
@@ -135,19 +159,31 @@ beautiful-chinese-resume/
 从结构化 JSON 生成中文 DOCX：
 
 ```powershell
-python .\scripts\build_resume_docx.py .\resume.json .\姓名-目标公司-岗位-中文简历.docx --style campus
+python .\scripts\build_resume_docx.py .\examples\sample_resume.json .\sample.docx --style campus
+```
+
+查看已有样式：
+
+```powershell
+python .\scripts\build_resume_docx.py --list-styles
 ```
 
 检查 DOCX：
 
 ```powershell
-python .\scripts\verify_resume_docx.py .\姓名-目标公司-岗位-中文简历.docx --require-word --expect-one-page
+python .\scripts\verify_resume_docx.py .\sample.docx --expect-one-page
 ```
 
 检查内容包括 Word 是否能打开、页数是否为一页、核心分区是否存在，以及目标岗位关键词是否自然出现。
+
+本地测试：
+
+```powershell
+python -m pytest
+```
 
 </details>
 
 ## License
 
-暂未选择开源许可证。如需公开复用或再分发，请先补充 License。
+MIT
