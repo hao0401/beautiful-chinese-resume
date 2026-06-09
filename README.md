@@ -6,6 +6,7 @@
 
 <p align="center">
   <img alt="Codex Skill" src="https://img.shields.io/badge/Codex-Skill-2F6F73?style=for-the-badge">
+  <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/hao0401/beautiful-chinese-resume/ci.yml?branch=main&style=for-the-badge&label=CI">
   <img alt="DOCX" src="https://img.shields.io/badge/Output-DOCX-31516A?style=for-the-badge">
   <img alt="Word Check" src="https://img.shields.io/badge/Word-Check-3C7A89?style=for-the-badge">
   <img alt="License" src="https://img.shields.io/badge/License-MIT-6B7C8F?style=for-the-badge">

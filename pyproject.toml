@@ -13,6 +13,10 @@ dependencies = [
   "python-docx>=1.1.2",
 ]
 
+[project.urls]
+Homepage = "https://github.com/hao0401/beautiful-chinese-resume"
+Repository = "https://github.com/hao0401/beautiful-chinese-resume"
+
 [project.optional-dependencies]
 test = [
   "pytest>=8.0",
